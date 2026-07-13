@@ -50,7 +50,7 @@ COUNTRIES_URL = "https://countriesnow.space/api/v0.1"
 async def _fetch_info_field(field: str) -> list[dict]:
     """Fetch all countries with one selected field from the info endpoint."""
     async with httpx.AsyncClient(follow_redirects=True, timeout=15.0) as client:
-        r = await client.get(f"{COUNTRIES_URL}/countries/info", params={"returns": field})
+        r = await client.post(f"{COUNTRIES_URL}/countries/info", json={"returns": field})
         r.raise_for_status()
         return r.json().get("data", [])
 
@@ -84,7 +84,7 @@ async def country_currency(name: str) -> dict:
 async def country_population(name: str) -> dict:
     """Get the most recent population figure for a country."""
     async with httpx.AsyncClient(follow_redirects=True, timeout=15.0) as client:
-        r = await client.get(f"{COUNTRIES_URL}/countries/population/q", params={"country": name})
+        r = await client.post(f"{COUNTRIES_URL}/countries/population/q", json={"country": name})
         if r.status_code == 404:
             return {"error": f"No country found for '{name}'"}
         r.raise_for_status()
