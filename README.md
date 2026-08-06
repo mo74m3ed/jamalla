@@ -13,7 +13,6 @@ A working demonstration of **one MCP server exposing many tools**, with **multip
 |---|---|
 | 💬 **Chat UI (agents)** | https://multi-agent-mcp-agents.onrender.com |
 | 🛠️ **MCP server** | https://multi-agent-mcp.onrender.com/mcp |
-| ❤️ MCP health check | https://multi-agent-mcp.onrender.com/health |
 | 📦 Source | https://github.com/jamalla/multi-agent-mcp |
 
 > ⏳ **Cold start:** both services run on Render's free tier and sleep after ~15 min idle. The first request after a nap can take 30 to 50s to wake the container, then the second is fast. The chat UI shows a "may take ~40s" hint while waiting.
@@ -125,7 +124,7 @@ multi-agent-mcp/
 # 1. Install
 python -m venv .venv
 .venv\Scripts\activate          # Windows  (macOS/Linux: source .venv/bin/activate)
-pip install -r requirements.txt fastapi uvicorn
+pip install -r requirements.txt
 
 # 2. Configure
 #   .env → OPENAI_API_KEY=sk-...
@@ -133,15 +132,8 @@ pip install -r requirements.txt fastapi uvicorn
 # 3a. Start the MCP server (terminal 1)
 python -m mcp_server.server                     # serves http://localhost:8000/mcp
 
-# 3b. Start the agent API + chat UI (terminal 2)
-#   defaults MCP_URL to http://localhost:8000/mcp
-uvicorn agents.api:app --reload --port 8080     # open http://localhost:8080
-```
-
-Point the agents at a **remote** MCP server without any code change:
-```bash
-export MCP_URL="https://multi-agent-mcp.onrender.com/mcp"
-uvicorn agents.api:app --port 8080
+# 3b. (Optional) Run local checks
+python /home/runner/work/jamalla/jamalla/test_api.py
 ```
 
 ## Deploy (Render)
