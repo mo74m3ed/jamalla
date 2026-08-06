@@ -1,81 +1,160 @@
-# 💫 About Me:
-Experienced Software Engineer and ML Researcher focusing on **recommendation systems**, **session-based modeling**, and **meta-learning**. My work spans building intelligent systems, designing scalable architectures, and developing end-to-end ML pipelines. I specialize in **API-driven platforms**, **data engineering**, and **cloud-native solutions**, backed by solid experience in **Java**, **PHP/Laravel**, **Node.js**, and **Python** for ML experimentation.
+# Multi-Agent MCP Demo
 
-📊 My current research involves **cold-start adaptation**, **user-behavior modeling**, and **meta-learning frameworks** for real-world recommender systems.
+A working demonstration of **one MCP server exposing many tools**, with **multiple LangGraph agents each bound to a filtered subset** of those tools, and a **supervisor** that routes each user question to the right agent, all deployed to the cloud with a browser chat UI.
 
-🤖 I build **agentic AI systems** on the **Model Context Protocol (MCP)**: designing multi-agent architectures where specialist agents share a single tool server while each sees only the tools it needs. I develop **MCP servers with FastMCP** and connect them to agents using **LangGraph** and **LangChain**, then containerize and deploy them as cloud-native services.
+> **The core idea:** a single MCP server hands over its *entire* tool catalog to any client. Filtering, deciding *which* agent sees *which* tools, happens on the client side, in one line:
+> ```python
+> agent_tools = [t for t in all_tools if t.name.startswith(prefix)]
+> ```
 
-🏆 I am an **AWS Certified Solutions Architect – Associate**  
-🔗 [Verify Credential](https://cp.certmetrics.com/amazon/en/public/verify/credential/8eca083ed6f14477bf3ec11c65af7163)
+## 🔗 Live URLs
 
+| Service | URL |
+|---|---|
+| 💬 **Chat UI (agents)** | https://multi-agent-mcp-agents.onrender.com |
+| 🛠️ **MCP server** | https://multi-agent-mcp.onrender.com/mcp |
+| ❤️ MCP health check | https://multi-agent-mcp.onrender.com/health |
+| 📦 Source | https://github.com/jamalla/multi-agent-mcp |
 
-## 🌐 Socials:
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jamala-zawia/) 
-[![Medium](https://img.shields.io/badge/Medium-12100E?logo=medium&logoColor=white)](https://medium.com/@jamala.zawia)
+> ⏳ **Cold start:** both services run on Render's free tier and sleep after ~15 min idle. The first request after a nap can take 30 to 50s to wake the container, then the second is fast. The chat UI shows a "may take ~40s" hint while waiting.
 
-# 💻 Tech Stack:
-![Anaconda](https://img.shields.io/badge/Anaconda-%2344A833.svg?style=for-the-badge&logo=anaconda&logoColor=white) 
-![MCP](https://img.shields.io/badge/Model_Context_Protocol-000000?style=for-the-badge&logo=modelcontextprotocol&logoColor=white)
-![FastMCP](https://img.shields.io/badge/FastMCP-009688?style=for-the-badge&logo=fastapi&logoColor=white)
-![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
-![LangGraph](https://img.shields.io/badge/LangGraph-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-%23ffffff.svg?style=for-the-badge&logo=Matplotlib&logoColor=black) 
-![mlflow](https://img.shields.io/badge/mlflow-%23d9ead3.svg?style=for-the-badge&logo=numpy&logoColor=blue) 
-![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white) 
-![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white) 
-![Plotly](https://img.shields.io/badge/Plotly-%233F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white) 
-![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white) 
-![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white) 
-![Scipy](https://img.shields.io/badge/SciPy-%230C55A5.svg?style=for-the-badge&logo=scipy&logoColor=%white) 
-![Streamlit](https://img.shields.io/badge/Streamlit-%23FE4B4B.svg?style=for-the-badge&logo=streamlit&logoColor=white)
-![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white) 
-![Apache](https://img.shields.io/badge/apache-%23D42029.svg?style=for-the-badge&logo=apache&logoColor=white) 
-![Apache Tomcat](https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=for-the-badge&logo=apache-tomcat&logoColor=black) 
-![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white) 
-![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) 
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi) 
-![Fastify](https://img.shields.io/badge/fastify-%23000000.svg?style=for-the-badge&logo=fastify&logoColor=white) 
-![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white) 
-![Joomla](https://img.shields.io/badge/joomla-%235091CD.svg?style=for-the-badge&logo=joomla&logoColor=white) 
-![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white) 
-![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) 
-![Socket.io](https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101) 
-![Strapi](https://img.shields.io/badge/strapi-%232E7EEA.svg?style=for-the-badge&logo=strapi&logoColor=white) 
-![WordPress](https://img.shields.io/badge/WordPress-%23117AC9.svg?style=for-the-badge&logo=WordPress&logoColor=white)
-![GraphQL](https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white) 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) 
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) 
-![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white) 
-![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white) 
-![PowerShell](https://img.shields.io/badge/PowerShell-%235391FE.svg?style=for-the-badge&logo=powershell&logoColor=white) 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) 
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![AmazonDynamoDB](https://img.shields.io/badge/Amazon%20DynamoDB-4053D6?style=for-the-badge&logo=Amazon%20DynamoDB&logoColor=white) 
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) 
-![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white) 
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) 
-![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white) 
-![Snowflake](https://img.shields.io/badge/snowflake-%2329B5E8.svg?style=for-the-badge&logo=snowflake&logoColor=white) 
-![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white) 
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![Apache Spark](https://img.shields.io/badge/Apache%20Spark-FDEE21?style=for-the-badge&logo=apachespark&logoColor=black) 
-![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) 
-![Bitbucket](https://img.shields.io/badge/bitbucket-%230047B3.svg?style=for-the-badge&logo=bitbucket&logoColor=white) 
-![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white) 
-![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white) 
-![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) 
-![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white) 
-![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white) 
-![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens) 
-![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white) 
-![PNPM](https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220) 
-![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)
+## Architecture
 
-### ✍️ Random Dev Quote
-![](https://quotes-github-readme.vercel.app/api?type=horizontal&theme=radical)
+```
+                        Browser (chat UI)
+                                │
+                                ▼
+        ┌───────────────────────────────────────────────┐
+        │   FastAPI agent service  (Render service #2)    │
+        │   ┌─────────────────────────────────────────┐  │
+        │   │           LangGraph Supervisor          │  │
+        │   │  (LLM router → picks the right agent)    │  │
+        │   └──────────┬──────────┬──────────┬────────┘  │
+        │       ┌──────▼─────┐ ┌──▼───────┐
+        │       │  Agent 1    │ │ Agent 2   │
+        │       │ weather_*   │ │ country_* │
+        │       │ (2 tools)   │ │ (5 tools) │
+        │       └──────┬─────┘ └──┬───────┘
+        └──────────────┼──────────┼──────────────────────────┘
+                      └──────────┘
+                     filtered subsets of one catalog
+                                 │  (streamable-HTTP / MCP)
+                    ┌────────────▼────────────┐
+                    │      MCP Server         │  (Render service #1)
+                    │   7 tools, unfiltered   │
+                    └────┬──────────┬─────────┘
+                         │          │
+                 ┌────────▼─┐ ┌──────▼────┐
+                 │Open-Meteo│ │CountriesNow│
+                 │(weather) │ │ (country)  │
+                 └──────────┘ └────────────┘
+```
 
----
-[![](https://visitcount.itsvg.in/api?id=jamalla&icon=0&color=0)](https://visitcount.itsvg.in)
+**Two clean separations:**
+- The **supervisor** decides *who* handles a query (routing).
+- The **prefix filter** decides *what* each agent can do (tool scoping).
 
-<!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
+## The tools (7 total)
+
+The naming convention (`weather_` / `country_` prefixes) is what makes per-agent filtering a one-liner.
+
+| Prefix | Tool | Source API |
+|---|---|---|
+| `weather_` | `weather_geocode` | Open-Meteo (geocoding) |
+| `weather_` | `weather_current` | Open-Meteo (forecast) |
+| `country_` | `country_capital` | CountriesNow |
+| `country_` | `country_currency` | CountriesNow |
+| `country_` | `country_population` | CountriesNow |
+| `country_` | `country_dial_code` | CountriesNow |
+| `country_` | `country_flag` | CountriesNow |
+
+Open-Meteo and CountriesNow are free and need **no key**.
+
+## Observability: see the route & tool steps
+
+Every answer returns a structured trace, rendered under each message in the UI (expandable):
+
+```
+🌤️ routed to Agent 1 (weather)   ▸ Show reasoning (4 steps)
+   🔧 weather_geocode({"city":"Tokyo"})
+   📥 weather_geocode → {"name":"Tokyo","country":"Japan","latitude":35.6895,...}
+   🔧 weather_current({"latitude":35.6895,"longitude":139.69171})
+   📥 weather_current → {"temperature_2m":27.0,"wind_speed_10m":4.5,...}
+```
+
+The `/ask` endpoint returns:
+```json
+{
+  "answer": "…",
+  "route":  { "destination": "weather", "agent": "Agent 1 (weather)" },
+  "steps":  [ { "kind": "tool_call", "tool": "...", "args": {...} },
+              { "kind": "tool_result", "tool": "...", "output": "..." } ]
+}
+```
+
+For deeper tracing (timings, tokens, nested spans), set `LANGCHAIN_TRACING_V2=true` and `LANGCHAIN_API_KEY` to enable **LangSmith**, no code changes required.
+
+## Tech stack
+
+- **MCP server:** [FastMCP](https://gofastmcp.com) over streamable-HTTP
+- **Agents / routing:** LangGraph (`create_react_agent`) + LangChain
+- **MCP ↔ LangGraph bridge:** `langchain-mcp-adapters`
+- **LLM:** OpenAI `gpt-4o-mini` (routing + agents)
+- **API / UI:** FastAPI (serves both `/ask` and the chat page)
+- **Hosting:** Render (two Docker web services, free tier)
+
+## Project structure
+
+```
+multi-agent-mcp/
+├── mcp_server/
+│   └── server.py          # FastMCP server: 7 tools, reads $PORT
+├── agents/
+│   ├── agent_config.py    # MCP client + prefix map (reads MCP_URL from env)
+│   ├── graph.py           # build_agents(): filter tools → create_react_agent
+│   └── supervisor.py      # LLM router + trace extraction
+├── Dockerfile.server      # image for the MCP server
+├── docker-compose.yml     # local parity for the MCP server
+├── requirements.txt
+└── .env                   # OPENAI_API_KEY (gitignored, never committed)
+```
+
+## Run locally
+
+```bash
+# 1. Install
+python -m venv .venv
+.venv\Scripts\activate          # Windows  (macOS/Linux: source .venv/bin/activate)
+pip install -r requirements.txt fastapi uvicorn
+
+# 2. Configure
+#   .env → OPENAI_API_KEY=sk-...
+
+# 3a. Start the MCP server (terminal 1)
+python -m mcp_server.server                     # serves http://localhost:8000/mcp
+
+# 3b. Start the agent API + chat UI (terminal 2)
+#   defaults MCP_URL to http://localhost:8000/mcp
+uvicorn agents.api:app --reload --port 8080     # open http://localhost:8080
+```
+
+Point the agents at a **remote** MCP server without any code change:
+```bash
+export MCP_URL="https://multi-agent-mcp.onrender.com/mcp"
+uvicorn agents.api:app --port 8080
+```
+
+## Deploy (Render)
+
+One Docker web service from this repo.
+
+**Service 1: MCP server**
+- Dockerfile: `Dockerfile.server`
+- Env vars:
+  - *(none required; Open-Meteo and CountriesNow are keyless)*
+
+Both read `$PORT` (injected by Render) and bind `0.0.0.0`, so no port config is needed.
+
+## Author
+
+**Jamalla Zawia** - jamala.zawia@gmail.com
