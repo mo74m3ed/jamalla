@@ -22,4 +22,5 @@ async def main():
         latest = max(counts, key=lambda x: x["year"]) if counts else None
         print("population:", latest)
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
