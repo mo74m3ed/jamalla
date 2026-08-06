@@ -9,7 +9,7 @@ class Route(BaseModel):
     """Which specialist agent should handle the user's query."""
     destination: Literal["weather", "country"] = Field(
         description="'weather' for weather/forecast/temperature questions; "
-                    "'country' for questions about countries, capitals, population, currency, languages."
+                    "'country' for questions about countries, capitals, population, currency, dial codes, or flags."
     )
 
 

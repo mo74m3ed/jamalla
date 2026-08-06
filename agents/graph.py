@@ -10,18 +10,18 @@ def filter_tools(all_tools, prefix):
 
 
 async def build_agents():
-    client = get_mcp_client()
-    all_tools = await client.get_tools()          # full catalog — all 7
+    async with get_mcp_client() as client:
+        all_tools = await client.get_tools()          # full catalog — all 7
 
-    agent1_tools = filter_tools(all_tools, AGENT_PREFIXES["agent1"])   # weather
-    agent2_tools = filter_tools(all_tools, AGENT_PREFIXES["agent2"])   # country
+        agent1_tools = filter_tools(all_tools, AGENT_PREFIXES["agent1"])   # weather
+        agent2_tools = filter_tools(all_tools, AGENT_PREFIXES["agent2"])   # country
 
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
-    agent1 = create_agent(llm, agent1_tools)   # bound to weather only
-    agent2 = create_agent(llm, agent2_tools)   # bound to country only
+        agent1 = create_agent(llm, agent1_tools)   # bound to weather only
+        agent2 = create_agent(llm, agent2_tools)   # bound to country only
 
-    return agent1, agent2, agent1_tools, agent2_tools
+        return agent1, agent2, agent1_tools, agent2_tools
 
 
 async def main():

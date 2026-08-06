@@ -30,33 +30,33 @@ A working demonstration of **one MCP server exposing many tools**, with **multip
         │   │           LangGraph Supervisor          │  │
         │   │  (LLM router → picks the right agent)    │  │
         │   └──────────┬──────────┬──────────┬────────┘  │
-        │       ┌──────▼─────┐ ┌──▼───────┐ ┌▼─────────┐ │
-        │       │  Agent 1    │ │ Agent 2   │ │ Agent 3  │ │
-        │       │ weather_*   │ │ country_* │ │worldcup_*│ │
-        │       │ (2 tools)   │ │ (5 tools) │ │(5 tools) │ │
-        │       └──────┬─────┘ └──┬───────┘ └┬─────────┘ │
-        └──────────────┼──────────┼──────────┼───────────┘
-                       └──────────┼──────────┘
+        │       ┌──────▼─────┐ ┌──▼───────┐
+        │       │  Agent 1    │ │ Agent 2   │
+        │       │ weather_*   │ │ country_* │
+        │       │ (2 tools)   │ │ (5 tools) │
+        │       └──────┬─────┘ └──┬───────┘
+        └──────────────┼──────────┼──────────────────────────┘
+                      └──────────┘
                      filtered subsets of one catalog
-                                  │  (streamable-HTTP / MCP)
-                     ┌────────────▼────────────┐
-                     │      MCP Server         │  (Render service #1)
-                     │   12 tools, unfiltered  │
-                     └────┬──────────┬─────────┬┘
-                          │          │         │
-                 ┌────────▼─┐ ┌──────▼────┐ ┌──▼──────────────┐
-                 │Open-Meteo│ │CountriesNow│ │football-data.org│
-                 │(weather) │ │ (country)  │ │  (World Cup)    │
-                 └──────────┘ └────────────┘ └─────────────────┘
+                                 │  (streamable-HTTP / MCP)
+                    ┌────────────▼────────────┐
+                    │      MCP Server         │  (Render service #1)
+                    │   7 tools, unfiltered   │
+                    └────┬──────────┬─────────┘
+                         │          │
+                 ┌────────▼─┐ ┌──────▼────┐
+                 │Open-Meteo│ │CountriesNow│
+                 │(weather) │ │ (country)  │
+                 └──────────┘ └────────────┘
 ```
 
 **Two clean separations:**
 - The **supervisor** decides *who* handles a query (routing).
 - The **prefix filter** decides *what* each agent can do (tool scoping).
 
-## The tools (12 total)
+## The tools (7 total)
 
-The naming convention (`weather_` / `country_` / `worldcup_` prefixes) is what makes per-agent filtering a one-liner.
+The naming convention (`weather_` / `country_` prefixes) is what makes per-agent filtering a one-liner.
 
 | Prefix | Tool | Source API |
 |---|---|---|
@@ -67,13 +67,8 @@ The naming convention (`weather_` / `country_` / `worldcup_` prefixes) is what m
 | `country_` | `country_population` | CountriesNow |
 | `country_` | `country_dial_code` | CountriesNow |
 | `country_` | `country_flag` | CountriesNow |
-| `worldcup_` | `worldcup_matches_upcoming` | football-data.org |
-| `worldcup_` | `worldcup_match_results` | football-data.org |
-| `worldcup_` | `worldcup_group_standings` | football-data.org |
-| `worldcup_` | `worldcup_teams` | football-data.org |
-| `worldcup_` | `worldcup_team_form` | football-data.org |
 
-Open-Meteo and CountriesNow are free and need **no key**. football-data.org needs a free API key (`FOOTBALL_API_KEY`). "Predictions" are the World Cup agent reasoning over standings and recent form it fetches with these tools, not a separate prediction API.
+Open-Meteo and CountriesNow are free and need **no key**.
 
 ## Observability: see the route & tool steps
 
@@ -113,16 +108,13 @@ For deeper tracing (timings, tokens, nested spans), set `LANGCHAIN_TRACING_V2=tr
 ```
 multi-agent-mcp/
 ├── mcp_server/
-│   └── server.py          # FastMCP server: 7 tools + /health, reads $PORT
+│   └── server.py          # FastMCP server: 7 tools, reads $PORT
 ├── agents/
 │   ├── agent_config.py    # MCP client + prefix map (reads MCP_URL from env)
 │   ├── graph.py           # build_agents(): filter tools → create_react_agent
-│   ├── supervisor.py      # LLM router + trace extraction
-│   └── api.py             # FastAPI: /ask + chat UI
+│   └── supervisor.py      # LLM router + trace extraction
 ├── Dockerfile.server      # image for the MCP server
-├── Dockerfile.agents      # image for the FastAPI agent service
 ├── docker-compose.yml     # local parity for the MCP server
-├── render.yaml            # Render blueprint (MCP server)
 ├── requirements.txt
 └── .env                   # OPENAI_API_KEY (gitignored, never committed)
 ```
@@ -154,21 +146,14 @@ uvicorn agents.api:app --port 8080
 
 ## Deploy (Render)
 
-Two Docker web services from this repo.
+One Docker web service from this repo.
 
 **Service 1: MCP server**
 - Dockerfile: `Dockerfile.server`
-- Health check path: `/health`
 - Env vars:
-  - `FOOTBALL_API_KEY` = your football-data.org key (needed by the World Cup tools)
+  - *(none required; Open-Meteo and CountriesNow are keyless)*
 
-**Service 2: Agent API + UI**
-- Dockerfile: `Dockerfile.agents`
-- Env vars:
-  - `OPENAI_API_KEY` = your OpenAI key
-  - `MCP_URL` = `https://multi-agent-mcp.onrender.com/mcp`
-
-Both read `$PORT` (injected by Render) and bind `0.0.0.0`, so no port config is needed. `render.yaml` describes the MCP server as a blueprint.
+Both read `$PORT` (injected by Render) and bind `0.0.0.0`, so no port config is needed.
 
 ## Author
 
